@@ -1,5 +1,6 @@
 import { useState, type ReactNode } from "react";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { Copy, Loader2, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -70,7 +71,7 @@ export function AiTool({
               <Copy /> Copy
             </Button>
             <div className="prose-ai">
-              <ReactMarkdown>{out}</ReactMarkdown>
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>{out}</ReactMarkdown>
             </div>
           </>
         ) : (
