@@ -21,7 +21,10 @@ export function AiTool({
 
   async function run() {
     const input = buildInput();
-    if (!input) return toast.error("Please fill in the required fields.");
+    if (!input) {
+      toast.error("Please fill in the required fields.");
+      return;
+    }
     setLoading(true);
     setOut("");
     try {

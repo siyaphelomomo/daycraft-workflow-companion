@@ -62,7 +62,7 @@ function EmailTab() {
           <SelectTrigger><SelectValue /></SelectTrigger>
           <SelectContent>
             {["formal", "friendly", "persuasive", "apologetic", "concise"].map((t) => (
-              <SelectItem key={t} value={t} className="capitalize">{t[0].toUpperCase() + t.slice(1)}</SelectItem>
+              <SelectItem key={t} value={t} className="capitalize">{t.charAt(0).toUpperCase() + t.slice(1)}</SelectItem>
             ))}
           </SelectContent>
         </Select>

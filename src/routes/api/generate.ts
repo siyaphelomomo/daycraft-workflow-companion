@@ -38,7 +38,7 @@ export const Route = createFileRoute("/api/generate")({
         if (!system || !input?.trim() || input.length > 20000) {
           return new Response("Invalid request", { status: 400 });
         }
-        const apiKey = process.env.LOVABLE_API_KEY;
+        const apiKey = process.env["LOVABLE_API_KEY"];
         if (!apiKey) return new Response("AI is not configured", { status: 500 });
         const runIdFetch = createLovableAiGatewayRunIdFetch();
         const provider = createOpenAI({
