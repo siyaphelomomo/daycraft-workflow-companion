@@ -103,7 +103,7 @@ export function AiTool({
                 <Copy /> Copy
               </Button>
             </div>
-            <div className="prose-ai">
+            <div className="prose-ai pt-10">
               <ReactMarkdown remarkPlugins={[remarkGfm]}>{out}</ReactMarkdown>
             </div>
           </>
