@@ -36,7 +36,7 @@ export function AiTool({
     const title = firstLine.replace(/[#*_`>|]/g, "").replace(/^\s*Subject:\s*/i, "").trim().slice(0, 100) || "Untitled";
     const { error } = await supabase.from("saved_items").insert({ tool, title, input: lastInput, output: out });
     setSaving(false);
-    if (error) return toast.error("Couldn't save. Please try again.");
+    if (error) { toast.error("Couldn't save. Please try again."); return; }
     setSaved(true);
     toast.success("Saved", { action: { label: "View", onClick: () => navigate({ to: "/saved" }) } });
   }
