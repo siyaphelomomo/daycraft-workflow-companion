@@ -8,3 +8,6 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Presentation content lives in a central deck registry and uses one 1920×1080 ScaledSlide renderer across the canvas and thumbnails, so sizing stays consistent.
+- The product presentation is a separate /slides page; the productivity dashboard remains the default screen.

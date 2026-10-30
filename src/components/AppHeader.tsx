@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
-import { Bookmark, LogOut } from "lucide-react";
+import { Bookmark, LogOut, Presentation } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { useSession } from "@/hooks/use-session";
@@ -23,6 +23,7 @@ export function AppHeader() {
           <span className="font-display text-xl font-bold">SmartWork AI</span>
         </Link>
         <div className="ml-auto flex items-center gap-2">
+          <Button asChild variant="ghost" size="sm"><Link to="/slides" search={{ slide: 1, print: false }}><Presentation /> <span className="hidden sm:inline">Slides</span></Link></Button>
           {ready && user ? (
             <>
               <Button asChild variant="ghost" size="sm"><Link to="/saved"><Bookmark /> Saved</Link></Button>
