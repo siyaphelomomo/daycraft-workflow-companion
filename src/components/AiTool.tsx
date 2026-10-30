@@ -1,7 +1,9 @@
 import { useState, type ReactNode } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { Copy, Loader2, Sparkles } from "lucide-react";
+import { Bookmark, Check, Copy, Loader2, Sparkles } from "lucide-react";
+import { useNavigate } from "@tanstack/react-router";
+import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 
@@ -18,6 +20,26 @@ export function AiTool({
 }) {
   const [out, setOut] = useState("");
   const [loading, setLoading] = useState(false);
+  const [lastInput, setLastInput] = useState("");
+  const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
+  const navigate = useNavigate();
+
+  async function save() {
+    const { data: u } = await supabase.auth.getUser();
+    if (!u.user) {
+      toast("Sign in to save your results.", { action: { label: "Sign in", onClick: () => navigate({ to: "/auth" }) } });
+      return;
+    }
+    setSaving(true);
+    const firstLine = out.split("\n").find((l) => l.trim()) ?? "Untitled";
+    const title = firstLine.replace(/[#*_`>|]/g, "").replace(/^\s*Subject:\s*/i, "").trim().slice(0, 100) || "Untitled";
+    const { error } = await supabase.from("saved_items").insert({ tool, title, input: lastInput, output: out });
+    setSaving(false);
+    if (error) { toast.error("Couldn't save. Please try again."); return; }
+    setSaved(true);
+    toast.success("Saved", { action: { label: "View", onClick: () => navigate({ to: "/saved" }) } });
+  }
 
   async function run() {
     const input = buildInput();
@@ -27,6 +49,8 @@ export function AiTool({
     }
     setLoading(true);
     setOut("");
+    setSaved(false);
+    setLastInput(input);
     try {
       const res = await fetch("/api/generate", {
         method: "POST",
@@ -62,18 +86,24 @@ export function AiTool({
       <div className="rounded-2xl border bg-card p-5 shadow-sm min-h-[320px] relative">
         {out ? (
           <>
-            <Button
-              variant="outline"
-              size="sm"
-              className="absolute right-4 top-4"
-              onClick={() => {
-                navigator.clipboard.writeText(out);
-                toast.success("Copied");
-              }}
-            >
-              <Copy /> Copy
-            </Button>
-            <div className="prose-ai">
+            <div className="absolute right-4 top-4 flex gap-2">
+              {!loading && (
+                <Button variant="outline" size="sm" onClick={save} disabled={saving || saved}>
+                  {saved ? <Check /> : <Bookmark />} {saved ? "Saved" : "Save"}
+                </Button>
+              )}
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  navigator.clipboard.writeText(out);
+                  toast.success("Copied");
+                }}
+              >
+                <Copy /> Copy
+              </Button>
+            </div>
+            <div className="prose-ai pt-10">
               <ReactMarkdown remarkPlugins={[remarkGfm]}>{out}</ReactMarkdown>
             </div>
           </>
