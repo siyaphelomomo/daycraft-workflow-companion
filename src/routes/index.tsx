@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { AiTool } from "@/components/AiTool";
+import { AppHeader } from "@/components/AppHeader";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -118,12 +119,7 @@ function PlannerTab() {
 function Index() {
   return (
     <div className="min-h-screen bg-background">
-      <header className="border-b bg-card/60 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center gap-3 px-4 py-4">
-          <div className="grid size-9 place-items-center rounded-xl bg-primary font-display text-lg font-bold text-primary-foreground">S</div>
-          <span className="font-display text-xl font-bold">SmartWork AI</span>
-        </div>
-      </header>
+      <AppHeader />
       <main className="mx-auto max-w-6xl px-4 py-8 md:py-12">
         <h1 className="font-display text-3xl font-bold md:text-5xl">Work smarter, not longer.</h1>
         <p className="mt-3 max-w-2xl text-muted-foreground md:text-lg">
