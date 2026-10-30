@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as SavedRouteImport } from './routes/saved'
+import { Route as SlidesRouteImport } from './routes/slides'
 import { Route as ApiGenerateRouteImport } from './routes/api/generate'
 
 const IndexRoute = IndexRouteImport.update({
@@ -29,6 +30,11 @@ const SavedRoute = SavedRouteImport.update({
   path: '/saved',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SlidesRoute = SlidesRouteImport.update({
+  id: '/slides',
+  path: '/slides',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiGenerateRoute = ApiGenerateRouteImport.update({
   id: '/api/generate',
   path: '/api/generate',
@@ -39,12 +45,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/saved': typeof SavedRoute
+  '/slides': typeof SlidesRoute
   '/api/generate': typeof ApiGenerateRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/saved': typeof SavedRoute
+  '/slides': typeof SlidesRoute
   '/api/generate': typeof ApiGenerateRoute
 }
 export interface FileRoutesById {
@@ -52,20 +60,22 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/saved': typeof SavedRoute
+  '/slides': typeof SlidesRoute
   '/api/generate': typeof ApiGenerateRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/saved' | '/api/generate'
+  fullPaths: '/' | '/auth' | '/saved' | '/slides' | '/api/generate'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/saved' | '/api/generate'
-  id: '__root__' | '/' | '/auth' | '/saved' | '/api/generate'
+  to: '/' | '/auth' | '/saved' | '/slides' | '/api/generate'
+  id: '__root__' | '/' | '/auth' | '/saved' | '/slides' | '/api/generate'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRoute: typeof AuthRoute
   SavedRoute: typeof SavedRoute
+  SlidesRoute: typeof SlidesRoute
   ApiGenerateRoute: typeof ApiGenerateRoute
 }
 
@@ -92,6 +102,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SavedRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/slides': {
+      id: '/slides'
+      path: '/slides'
+      fullPath: '/slides'
+      preLoaderRoute: typeof SlidesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/generate': {
       id: '/api/generate'
       path: '/api/generate'
@@ -106,6 +123,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRoute: AuthRoute,
   SavedRoute: SavedRoute,
+  SlidesRoute: SlidesRoute,
   ApiGenerateRoute: ApiGenerateRoute,
 }
 export const routeTree = rootRouteImport
