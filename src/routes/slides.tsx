@@ -7,7 +7,7 @@ import { slides, DeckSlide } from "@/components/slides/deck";
 import { ScaledSlide } from "@/components/slides/ScaledSlide";
 
 export const Route = createFileRoute("/slides")({
-  validateSearch: (search: Record<string, unknown>) => ({ slide: Math.min(slides.length, Math.max(1, Number(search.slide) || 1)), print: search.print === true || search.print === "true" }),
+  validateSearch: (search: Record<string, unknown>) => ({ slide: Math.min(slides.length, Math.max(1, Math.trunc(Number(search["slide"])) || 1)), print: search["print"] === true || search["print"] === "true" }),
   head: () => ({ meta: [
     { title: "SmartWork AI — Product Presentation" },
     { name: "description", content: "Explore SmartWork AI’s email generator, meeting notes summarizer and task planner in a seven-slide presentation." },
